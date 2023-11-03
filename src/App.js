@@ -7,7 +7,6 @@ import Slider from "./Sections/misc/slider";
 import Tasks from "./Sections/Tasks";
 import Home from "./Sections/Home";
 import Profile from "./Sections/Profile";
-import CustomAutoComplete from "./Node/Tasks_v2/customAuto";
 function App() {
 
   return (

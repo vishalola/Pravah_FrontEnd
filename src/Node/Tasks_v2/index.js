@@ -1,7 +1,5 @@
 import {TbSubtask} from 'react-icons/tb'
 import Item from './item.js'
-import FreeSolo from './searchMUI';
-import TextField from '@mui/material/TextField';
 import {useEffect, useState} from 'react'
 import {RiAddCircleLine} from 'react-icons/ri'
 export default function Tasks(props){
