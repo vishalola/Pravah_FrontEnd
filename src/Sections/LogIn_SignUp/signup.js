@@ -1,6 +1,6 @@
 import TextField from '@mui/material/TextField'
 import LoadingButton from '@mui/lab/LoadingButton';
-
+import TeamSVG from '../../Assets/team.svg';
 import { useState } from 'react'
 // import axios from 'axios';
 // import { useNavigate } from 'react-router-dom';
@@ -55,6 +55,7 @@ export default function SignUp(){
     return (
         <div className="h-[100vh] flex justify-center items-center ">
             
+            <img className='absolute h-[150px] bottom-0' src={TeamSVG} alt="" />
             <div className="outlin shadow-2xl bg-white  border-b-4 border-b-blue-700  w-[380px]">
                 <div className="
                 p-3 text-4xl

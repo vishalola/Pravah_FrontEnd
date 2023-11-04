@@ -2,6 +2,7 @@ import TextField from '@mui/material/TextField'
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import TeamSVG from '../../Assets/team.svg';
 export default function Login(props){
 
     const [passCheck,setPassCheck]=useState(true);
@@ -63,7 +64,8 @@ export default function Login(props){
     return (
         <div className=" h-[100vh] flex justify-center items-center">
             
-            <div className="outlin bg-white shadow-2xl  border-b-4 border-b-blue-700  w-[400px]">
+            <img className='absolute h-[150px] bottom-0' src={TeamSVG} alt="" />
+            <div className="outlin  bg-white shadow-2xl  border-b-4 border-b-blue-700  w-[400px]">
                 <div className="
                 p-3 text-4xl
                 outlin flex mt-8 mb-4  text-blue-700  items-center justify-center">

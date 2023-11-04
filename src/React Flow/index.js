@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useRef } from "react";
-import { ReactFlow,useNodesState,useEdgesState, addEdge, Background, ReactFlowProvider, } from "reactflow" 
+import { ReactFlow,useNodesState,useEdgesState, addEdge, Background, ReactFlowProvider, StraightEdge, StepEdge, } from "reactflow" 
 import 'reactflow/dist/style.css';
 import CustomNode from "./custom";
 import AddIcon from "../AddIcon";
@@ -44,7 +44,7 @@ function Check(){
             
             console.log(event.target.getAttribute('data-handle'))
             setNodes((nds) => nds.concat(newNode));
-            setEdges((eds) => eds.concat({ id, source: connectingNodeId.current, target: id }));
+            setEdges((eds) => eds.concat({ id, source: connectingNodeId.current, target: id,type:"default"}));
           }
         },
         [project]

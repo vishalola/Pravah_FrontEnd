@@ -28,7 +28,7 @@ export default function Tasks(props){
     return (
         <div className="h-[100vh] entranceAnimate flex justify-center items-center">
             <div className="outlin  gap-2 text-white flex w-[80%] min-h-[400px] md:flex-col">
-                <div className="w-full p-4 flex flex-col justify-center"> 
+                <div className="w-full outlin max-h-[500px] overflow-scroll p-4 flex flex-col "> 
                     <TaskItem assigned = {setAssigned} completed = {setCompleted} task="Some doable" project="Temple Fun"/>
                     <TaskItem assigned = {setAssigned} completed = {setCompleted} task="Some doable task 2" project="Hush App"/>
                     <TaskItem assigned = {setAssigned} completed = {setCompleted} task="Some doable task 3" project="Prava"/>

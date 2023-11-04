@@ -4,9 +4,9 @@ export default  function CustomNode(){
 
     return (
         <div>
-             <Handle type='target' id="top" position={Position.Top}/>
+             <Handle className='opacity-0' type='target' id="top" position={Position.Top}/>
             <Node/>
-            <Handle type='source' id="bottom" position={Position.Bottom}/>
+            <Handle className='h-[15px] w-[15px] absolute bottom-0  rounded-full outline-none shadow-lg bg-white border-4 border-blue-700' type='source' id="bottom" position={Position.Bottom}/>
         </div>
     )
 }

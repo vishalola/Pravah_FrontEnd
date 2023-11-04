@@ -1,4 +1,4 @@
-import {AiOutlineFolderOpen,AiFillFolderOpen, AiOutlineSave, AiOutlineFileAdd, AiFillFileAdd, AiFillSave,AiOutlineLink} from 'react-icons/ai'
+import {AiOutlineFolderOpen,AiOutlineUserAdd, AiOutlineSave, AiOutlineFileAdd, AiFillFileAdd, AiFillSave,AiOutlineLink} from 'react-icons/ai'
 import {HiOutlineUserGroup} from 'react-icons/hi'
 export default function Dock(props){
 
@@ -35,7 +35,7 @@ export default function Dock(props){
                     <AiOutlineSave/>
                 </div>
                 <div onClick={()=>props.setInviteVis(true)} className='hover:scale-110 transition-all cursor-pointer outlin flex justify-center items-center text-3xl'>
-                    <AiOutlineLink/>
+                    <AiOutlineUserAdd/>
                 </div>
                 <div onClick={()=>{props.setTeamVis(true)}} className='hover:scale-110 transition-all cursor-pointer outlin flex justify-center items-center text-3xl'>
                     <HiOutlineUserGroup/>
