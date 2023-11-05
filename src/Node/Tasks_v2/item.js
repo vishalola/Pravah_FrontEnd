@@ -10,7 +10,15 @@ export default function Item(props){
     return(
         <div className='flex gap-2 min-w-[400px] outlin p-3 items-center justify-between'>
             <div className='flex gap-3 items-center justify-center'>
-                <div onClick={()=>setCompleted(!completed)} className={`min-h-[15px] cursor-pointer ${completed?"bg-blue-500":"outline"} transition-all min-w-[15px]`}>
+                <div onClick={()=>{
+                    
+                    if(!completed)
+                        props.setTasksDone(task=>++task);
+                    else
+                        props.setTasksDone(task=>--task);
+
+                    setCompleted(!completed)
+                    }} className={`min-h-[15px] cursor-pointer ${completed?"bg-blue-500":"outline"} transition-all min-w-[15px]`}>
 
                 </div>
                 <div className={`outlin transition-all ${completed?"line-through opacity-50":""} text-sm`}>
@@ -28,7 +36,7 @@ export default function Item(props){
                 }
                 {isAssigned &&
                     <div>
-                        {assigned}
+                     {assigned}
                     </div>
                 }
             </div>

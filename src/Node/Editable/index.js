@@ -16,6 +16,7 @@ export default function Editable(props){
                 font-bold
                 cursor-text
             `} placeholder={props.placeholder}>
+                {props.title}
              </div>
         </div>
     )

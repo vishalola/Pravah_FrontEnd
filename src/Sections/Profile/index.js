@@ -3,13 +3,32 @@ import {MdAlternateEmail} from 'react-icons/md'
 import {CgScrollV} from 'react-icons/cg'
 import ProjectItem from "../Dock/projectItem"
 import { useNavigate } from "react-router-dom"
+import {PiSignOutBold} from 'react-icons/pi'
+import { useEffect,useState } from "react"
+import axios from "axios"
 export default function Profile(props){
+    const [project,setProjects] = useState([]);
     let navigate = useNavigate();
+    useEffect(()=>{
+        axios.get("http://localhost:5001/project/view",{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{
+            let projects = res.data.projects;
+            for(let i=0;i<projects.length;i++)
+            {
+                axios.get("http://localhost:5001/project/view/"+projects[i],{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{
+                    let data = res.data;
+                    setProjects(pr=>[...pr,<ProjectItem projectId={projects[i]} name={data.name} owner={data.owner} creationDate="05-11-2023"/>])
+                })
+            }
+        })
+    },[])
     return (
         <>
         <div className=
         {`h-[100vh] entranceAnimate flex justify-center items-center relative`}
         >
+            {/* <div className="absolute outline cursor-pointer z-[200] text-white text-4xl right-5 top-10">
+                <PiSignOutBold/>
+            </div> */}
             <div className="outlin p-2 flex md:flex-col">
                 <div className="
                 flex flex-col justify-center gap-4
@@ -20,7 +39,7 @@ export default function Profile(props){
                         <AiOutlineUser/>
                     </div>
                     <div className="font-light text-3xl">
-                        Vishal Ola
+                       {props.name}
                     </div>
                     <div className={`bg-white shadow-lg shadow-[#1f1f1f69]  px-5 py-3 rounded-xl text-sm text-black`}>
                         <div className="flex  outlin my-1">         
@@ -28,7 +47,7 @@ export default function Profile(props){
                                 <MdAlternateEmail/>
                             </div>
                             <div>
-                                vishalola21
+                                {props.userName}
                             </div>
                         </div>
                         <div className="flex my-1 ">
@@ -36,7 +55,7 @@ export default function Profile(props){
                                 <AiOutlineMail/>
                             </div>
                             <div>
-                                vishalola555@gmail.com
+                                {props.email}
                             </div>
                         </div>
                     </div>
@@ -58,13 +77,7 @@ export default function Profile(props){
             bg-blue-600 text-white shadow-lg shadow-[#1f1f1f47] rounded-xl p-4 mt-10 w-[500px] ">
                     
                     <div className="outlin rounded-md  w-full px-3 py-1 my-4">
-                        <ProjectItem name="Hush App" owner="Vishal Ola" creationDate="05-10-2023"/>
-                        <ProjectItem name="Hush App" owner="Vishal Ola" creationDate="05-10-2023"/>
-                        <ProjectItem name="Hush App" owner="Vishal Ola" creationDate="05-10-2023"/>
-                        <ProjectItem name="Hush App" owner="Vishal Ola" creationDate="05-10-2023"/>
-                        <ProjectItem name="Hush App" owner="Vishal Ola" creationDate="05-10-2023"/>
-                        <ProjectItem name="Hush App" owner="Vishal Ola" creationDate="05-10-2023"/>
-
+                        {project}
                     </div>
                     <div onClick={()=>navigate("/new")} className="cursor-pointer hover:outline-none bg-blue-600 hover:bg-[white] transition-all hover:text-blue-700 flex items-center justify-center gap-2 outline px-3 py-2">
                         <div className="text-xl">

@@ -7,27 +7,108 @@ import { useState } from "react";
 import NewProject from "../misc/newProject";
 import Invites from "../Invite";
 import SendInvite from "../misc/sendInvite";
-import { useLocation } from "react-router-dom";
+import { useLocation,useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import axios from "axios";
+import ProjectItem from "../Dock/projectItem.js";
+import {BsArrowLeft} from 'react-icons/bs'
 export default function ProjectPage(props){
     const location = useLocation();
+    const navigate = useNavigate();
     const [openVis,setOpenVis] = useState(false);
     const [newVis,setNewVis] = useState(false);
     const [teamVis,setTeamVis] = useState(false);
     const [inviteVis,setInviteVis] = useState(false);
+    const [projectTitle,setProjectTitle] = useState("Untitled Project");
+    const [edges,setEdges] = useState([]);
+    const [nodes,setNodes] = useState([]);
+    const [projectID,setProjectID]= useState('');
+    const [projects,setProjects] = useState([]);
+    let fetchProject = ()=>{
+        setProjects([])
+        axios.get("http://localhost:5001/project/view",{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{
+            let projects = res.data.projects;
+            for(let i=0;i<projects.length;i++)
+            {
+                axios.get("http://localhost:5001/project/view/"+projects[i],{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{
+                    let data = res.data;
+                    setProjects(pr=>[...pr,<ProjectItem projectId={projects[i]} name={data.name} owner={data.owner} creationDate="05-11-2023"/>])
+                })
+            }
+        })
+    }
+
+    let handleSave = ()=>{
+
+        let tempNodes = [];
+        let tempEdges = [];
+        for(let i=0;i<nodes.length;i++)
+        {
+            tempNodes.push(
+                    {
+                        "id":nodes[i].id,
+                        "projectID":projectID,
+                        "position":[nodes[i].position.x,nodes[i].position.y],
+                        "title":nodes[i].data.title,
+                        "description":nodes[i].data.desc
+                    }
+                )
+        }
+        for(let i=0;i<edges.length;i++)
+        {
+            tempEdges.push([edges[i].id,edges[i].source,edges[i].target]);
+        }
+
+        axios.post("http://localhost:5001/project/save",{
+            "name":projectTitle,
+            "isNew":false,
+            "projectID":projectID,
+            "edgeList":tempEdges,
+            "nodes":tempNodes
+        },{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{
+            console.log(res);
+        }).catch(e=>{
+            console.log(e)
+        })
+    }
     useEffect(()=>{
+        setNodes([]);
+        setEdges([])
+        setProjectID('');
         if(location.pathname==="/new")
         {
             setNewVis(true);
         }
-    },[])
+        else
+        {
+            setProjectID(location.pathname.substring(1));
+            axios.get("http://localhost:5001/project/open"+location.pathname,{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{
+                console.log(res.data);
+                let data = res.data;
+                setProjectTitle(data.name);
+                let nodeData = data.nodes;
+                let edgeData = data.edgeList;
+                nodeData.forEach(node=>{
+                    setNodes(nodes=>[...nodes,{id:`${node.id}`,type:"special",position:{x:node.position[0],y:node.position[1]},data:{title:node.title,desc:node.description}}])
+                })
+                edgeData.forEach(edge=>{
+                    setEdges(edges=>[...edges,{id:`${edge[0]}`,type:"default",source:`${edge[1]}`,target:`${edge[2]}`}])
+                })
+            }).catch(e=>{
+                console.log(e)
+            })
+        }
+    },[location.pathname])
   
     return (
     <div className="overflow-hidden relative w-[100vw] h-[100vh] flex justify-center items-center">
-        <ProjectTitle title="Untitled Project"/>
-        <Temp/>
-        <Dock setInviteVis={setInviteVis} setOpenVis = {setOpenVis} setNewVis={setNewVis} setTeamVis={setTeamVis}/>
-        <OpenProject vis={openVis} setOpenVis={setOpenVis}/>
+        <div onClick={()=>navigate("/profile")} className="absolute top-10 left-10 text-4xl z-[100] cursor-pointer rounded-full p-2 text-white bg-blue-700 ">
+            <BsArrowLeft/>
+        </div>
+        <ProjectTitle title={projectTitle}/>
+        <Temp setEdges={setEdges} setNodes={setNodes} edges={edges} nodes={nodes}/>
+        <Dock fetchProject={fetchProject} handleSave={handleSave} setInviteVis={setInviteVis} setOpenVis = {setOpenVis} setNewVis={setNewVis} setTeamVis={setTeamVis}/>
+        <OpenProject projects={projects} vis={openVis} setOpenVis={setOpenVis}/>
         <Team vis={teamVis} setTeamVis={setTeamVis}/>
         <NewProject vis={newVis} setNewVis={setNewVis}/>
         <Invites/>

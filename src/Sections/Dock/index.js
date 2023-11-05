@@ -1,16 +1,10 @@
 import {AiOutlineFolderOpen,AiOutlineUserAdd, AiOutlineSave, AiOutlineFileAdd, AiFillFileAdd, AiFillSave,AiOutlineLink} from 'react-icons/ai'
 import {HiOutlineUserGroup} from 'react-icons/hi'
+import axios from 'axios'
+import ProjectItem from './projectItem'
+import { useState } from 'react'
 export default function Dock(props){
 
-    let openProject = ()=>{
-
-    }
-    let saveProject = ()=>{
-
-    }
-    let shareLink = ()=>{
-
-    }
     return (
         <div className="
         absolute
@@ -25,13 +19,17 @@ export default function Dock(props){
             p-2 gap-5
             shadow-xl
             ">
-                <div onClick={()=>props.setOpenVis(true)} className='hover:scale-110 transition-all cursor-pointer outlin flex justify-center items-center text-3xl'>
+                <div onClick={
+                    ()=>{
+                        props.setOpenVis(true)
+                        props.fetchProject();
+                    }} className='hover:scale-110 transition-all cursor-pointer outlin flex justify-center items-center text-3xl'>
                     <AiOutlineFolderOpen/>
                 </div>
                 <div onClick={()=>props.setNewVis(true)} className='hover:scale-110 transition-all cursor-pointer outlin flex justify-center items-center text-3xl'>
                     <AiOutlineFileAdd/>
                 </div>
-                <div className='hover:scale-110 transition-all cursor-pointer outlin flex justify-center items-center text-3xl'>
+                <div onClick={props.handleSave} className='hover:scale-110 transition-all cursor-pointer outlin flex justify-center items-center text-3xl'>
                     <AiOutlineSave/>
                 </div>
                 <div onClick={()=>props.setInviteVis(true)} className='hover:scale-110 transition-all cursor-pointer outlin flex justify-center items-center text-3xl'>

@@ -11,7 +11,7 @@ export default function Description(props){
         `}
         style={{maxWidth:`${props.maxWidth}px`}}
         >
-            
+            {props.desc}
         </div>
     )
 }

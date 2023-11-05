@@ -2,60 +2,59 @@ import TextField from '@mui/material/TextField'
 import LoadingButton from '@mui/lab/LoadingButton';
 import TeamSVG from '../../Assets/team.svg';
 import { useState } from 'react'
-// import axios from 'axios';
-// import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export default function SignUp(){
     const [passCheck,setPassCheck]=useState(false);
     const [userCheck,setUserCheck]=useState(false);
     const [load,setLoading]=useState(false);
-    // const navigate=useNavigate();
-    // let handleClick=(e)=>{
-    //     setLoading(true);
-    //     e.preventDefault();
-    //     let username=e.target[0].value
-    //     let name=e.target[2].value
-    //     let email=e.target[4].value
-    //     let number=e.target[6].value
-    //     let password=e.target[8].value
-    //     let confirmPass=e.target[10].value
-    //     if(password!==confirmPass)
-    //     {
-    //         // password didn't match with confirmPassword;
-    //         setPassCheck(true)
-    //         setLoading(false);
-    //     }
-    //     else
-    //     {
-    //         // password matched
-    //         setPassCheck(false);
-    //         axios.post("https://findmybuddy-backend.onrender.com/addUser",{
-    //             "name":name,
-    //             "username":username,
-    //             "email":email,
-    //             "number":number,
-    //             "password":password
-    //         }).then(res=>{
-    //             setLoading(false);
-    //             let check=res.data;
-    //             if(check)
-    //             {
-    //                 // user credentials added to database.
-    //                 navigate("/login")
-    //             }
-    //             else
-    //             {
-    //                 // User already exists
-    //                 setUserCheck(true);
-    //             }
-    //         })
-    //     }
+    const navigate=useNavigate();
+    let handleClick=(e)=>{
+        setLoading(true);
+        e.preventDefault();
+        let username=e.target[0].value
+        let name=e.target[2].value
+        let email=e.target[4].value
+        let password=e.target[6].value
+        let confirmPass=e.target[8].value
+        if(password!==confirmPass)
+        {
+            // password didn't match with confirmPassword;
+            setPassCheck(true)
+            setLoading(false);
+        }
+        else
+        {
+            // password matched
+            setPassCheck(false);
+            axios.post("http://localhost:5001/auth/signup",{
+                "name":name,
+                "userName":username,
+                "email":email,
+                "password":password
+            }).then(res=>{
+                setLoading(false);
+                let token=res.data.token;
+                
+                    // user credentials added to database.
+                navigate("/login")
+            }).catch(e=>{
+                setLoading(false);
+                console.log(e);
+                let error = e.response.status;
+                if(error = 400)
+                {
+                    setUserCheck(true);
+                }
+            })
+        }
 
-    // }
+    }
     return (
         <div className="h-[100vh] flex justify-center items-center ">
             
-            <img className='absolute h-[150px] bottom-0' src={TeamSVG} alt="" />
+            <img className='absolute z-[-1] h-[150px] bottom-0' src={TeamSVG} alt="" />
             <div className="outlin shadow-2xl bg-white  border-b-4 border-b-blue-700  w-[380px]">
                 <div className="
                 p-3 text-4xl
@@ -64,11 +63,11 @@ export default function SignUp(){
                     Sign Up
                 </div>
                 <form 
-                // onSubmit={handleClick}
+                onSubmit={handleClick}
                 className="outlin mx-8 p-2 flex justify-center px-4 flex-col gap-4 mb-12 ">
-                    <TextField required error={userCheck} onChange={()=>setUserCheck(false)} label="Username" variant="outlined" />
+                    <TextField required onChange={()=>setUserCheck(false)} label="Username" variant="outlined" />
                     <TextField required  label="Full Name" variant="outlined" />
-                    <TextField required type="email" label="Email" variant="outlined" />
+                    <TextField required error={userCheck} type="email" label="Email" variant="outlined" />
                     <TextField required  type="password" label="Password" variant="outlined" />
                     <TextField onChange={()=>setPassCheck(false)} required error={passCheck}  type="password" label="Confirm Password" variant="outlined" />
                     <LoadingButton loading={load} type='submit' className={`${!load?'!bg-blue-700':''}`} variant='contained'>Sign Up</LoadingButton>

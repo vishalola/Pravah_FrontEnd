@@ -73,7 +73,7 @@ export default function Slider(props){
     return(
         <>
         {location.pathname === "/" || location.pathname === "/profile" || location.pathname === "/tasks" ?
-        (<svg className='z-[100] fixed w-[100%] h-[120px] md:h-auto ' viewBox="0 0 1512 183" fill="none" xmlns="http://www.w3.org/2000/svg">
+        (<svg className='z-[10] fixed w-[100%] h-[120px] md:h-auto ' viewBox="0 0 1512 183" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path id='navbar' d={homePath} fill="#1D4ED8"/> 
             <path id='home' d="M760.551 52.7583C759.482 51.7472 757.809 51.7472 756.74 52.7583L743.302 65.4626C742.471 66.2486 742 67.3423 742 68.4864V83.9369C742 86.235 743.863 88.0982 746.161 88.0982H750.323C752.621 88.0982 754.484 86.235 754.484 83.9369V77.0012C754.484 76.2352 755.105 75.6142 755.871 75.6142H761.42C762.186 75.6142 762.807 76.2352 762.807 77.0012V83.9369C762.807 86.235 764.67 88.0982 766.968 88.0982H771.13C773.428 88.0982 775.291 86.235 775.291 83.9369V68.4864C775.291 67.3423 774.82 66.2486 773.988 65.4626L760.551 52.7583Z" fill="#FEFEFE"/>
             <rect className='cursor-pointer' onClick={animateHome} width="57.8589" height="57.7181" transform="translate(730 41.8442)" fill="white" fillOpacity="0.00"/>
