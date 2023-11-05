@@ -81,15 +81,30 @@ export default function ProjectPage(props){
         }
         else
         {
-            setProjectID(location.pathname.substring(1));
             axios.get("http://localhost:5001/project/open"+location.pathname,{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{
-                console.log(res.data);
+            setProjectID(location.pathname.substring(1));
                 let data = res.data;
                 setProjectTitle(data.name);
                 let nodeData = data.nodes;
                 let edgeData = data.edgeList;
+                let tempTasks = [
+                    {
+                        title:"Temp try",
+                        assignedTo:"Pavitra Pandey",
+                        isCompleted:true,
+                    },
+                    {
+                        title:"Temp try Second",
+                        assignedTo:"Pavitra Pandey",
+                        isCompleted:false,
+                    }
+                ]
                 nodeData.forEach(node=>{
-                    setNodes(nodes=>[...nodes,{id:`${node.id}`,type:"special",position:{x:node.position[0],y:node.position[1]},data:{title:node.title,desc:node.description}}])
+                    setNodes(nodes=>[...nodes,{id:`${node.id}`,type:"special",position:{x:node.position[0],y:node.position[1]},data:{
+                        title:node.title,
+                        desc:node.description,
+                        tasks :node.taskList
+                    }}])
                 })
                 edgeData.forEach(edge=>{
                     setEdges(edges=>[...edges,{id:`${edge[0]}`,type:"default",source:`${edge[1]}`,target:`${edge[2]}`}])

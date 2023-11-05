@@ -3,7 +3,7 @@ import { useState } from 'react'
 import CustomAutoComplete from './customAuto';
 export default function Item(props){
     const [assignBox,setAssignBox] = useState(false);
-    const [completed,setCompleted] = useState(false);
+    const [completed,setCompleted] = useState(props.isCompleted);
     const [isAssigned,setIsAssigned] = useState(false);
     const [assigned,setAssigned] = useState('');
 

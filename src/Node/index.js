@@ -7,22 +7,9 @@ import ColorPalette from "./colorPalette";
 export default function Node(props){
     let [isActive,setIsActive] = useState(true); 
     let [title,setTitle] = useState(props.title);
-    let [desc,setDesc] = useState(props.desc)
+    let [desc,setDesc] = useState(props.desc);
     let [color,setColor] = useState('white');
     let [hov,setHov] = useState(false);
-
-    // useEffect(()=>{
-    //     props.updateNodeData(props.data.id, {
-    //         ...props.data,
-    //         title: title,
-    //       });
-    // },[title])
-    // useEffect(()=>{
-    //     props.updateNodeData(props.data.id, {
-    //         ...props.data,
-    //         description: desc,
-    //     });
-    // },[desc])
     return (
         <div
         onMouseLeave={()=>{
@@ -50,7 +37,7 @@ export default function Node(props){
                 <Description changeDesc={setDesc} desc={props.desc} maxWidth={150}/>
             </div>
             <div className="absolute left-[100%] top-1">
-                <Tasks setActive={setIsActive}/>
+                <Tasks tasks={props.tasks} setActive={setIsActive}/>
             </div>
         </div>
     )

@@ -9,11 +9,21 @@ export default function Tasks(props){
     const [tasksDone,setDone] = useState(0);
     const [task,setTask] = useState('');
     const [taskList,setTaskList] = useState([]);
+
+    useEffect(()=>{
+        (props.tasks).forEach(tsk=>{
+            if(tsk[2]==="true")
+            {
+                setDone(done=>[++done]);
+            }
+            setTaskList(tas=>[...tas,<Item setTasksDone={setDone} isCompleted={(tsk[2]==="true"?true:false)} task={tsk[0]} assigned={tsk[1]}/>])
+        })
+    },[props.tasks])
     let handleTaskAdd = (e)=>{
         e.preventDefault();
         if(task!=='')
         {
-            setTaskList(list=>[...list,<Item setTasksDone={setDone} task={task} assigned="Unassigned"/>])
+            setTaskList(list=>[...list,<Item setTasksDone={setDone} isCompleted={false} task={task} assigned="Unassigned"/>])
         }
     }
     useEffect(()=>{
