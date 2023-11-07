@@ -1,70 +1,38 @@
-# Getting Started with Create React App
+# Pravah: A Beginner-Friendly Project Management Tool
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Introduction
 
-## Available Scripts
+Pravah is a project management tool designed specifically for new or beginner developers. It features a simple and intuitive UI that makes it easy to get started with project management basics. With Pravah, you can learn to:
 
-In the project directory, you can run:
+* Create and manage tasks
+* Collaborate with other team members
+* Track project progress
+* Familiarize yourself with essential project management methods and tools
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **User-Friendly Interface**: Pravah offers an intuitive and beginner-friendly UI to make project management accessible to newcomers.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **Collaborative Work**: Users can easily collaborate with their team members, helping them learn how to work together effectively.
 
-### `npm test`
+- **Progress Tracking**: Pravah allows users to track their project's progress in a clear and organized manner.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Built with Modern Technologies**: The project is built using ReactJS with React Flow for the frontend and Express.js with MongoDB for the backend.
+## Technologies
 
-### `npm run build`
+Pravah is built with the following technologies:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+* **Frontend:** ReactJs, React Flow, TailwindCSS
+* **Backend:** ExpressJs, MongoDB
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Status
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Pravah is currently under development. However, it is already usable for basic project management tasks.
 
-### `npm run eject`
+## Contributions
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+We welcome any contributions to Pravah. Please feel free to submit pull requests or issues.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Contact
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+For any inquiries or feedback, please contact at Vishal Ola [vishalola555@gmail.com]
