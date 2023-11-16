@@ -48,8 +48,8 @@ function Check(props){
     },[setEdges])
     let addNode = ()=>{
       let newID= getId();
-        setNodes(nods =>[...nods, { id:newID,type:"special",data:{title:'',desc:'',tasks:[]}, position: { x:WIDTH/2 - 100, y: HEIGHT/2 -100}}])
-        props.setNodes(nods =>[...nods, { id:newID,type:"special",data:{title:'',desc:'',tasks:[]}, position: { x:WIDTH/2 - 100, y: HEIGHT/2 -100}}])
+        setNodes(nods =>[...nods, { id:newID,type:"special",data:{title:'',desc:'',teamList:props.team}, position: { x:WIDTH/2 - 100, y: HEIGHT/2 -100}}])
+        props.setNodes(nods =>[...nods, { id:newID,type:"special",data:{title:'',desc:'',teamList:props.team}, position: { x:WIDTH/2 - 100, y: HEIGHT/2 -100}}])
 
     }
     const onConnectStart = useCallback((_, { nodeId }) => {
@@ -66,7 +66,7 @@ function Check(props){
             const newNode = {
               id,
               type:"special",
-              data:{title:'',desc:'',tasks:[]},
+              data:{title:'',desc:'',teamList:props.team},
               // we are removing the half of the node width (75) to center the new node
               position: project({ x: event.clientX - left - 75, y: event.clientY - top })
             };
@@ -105,10 +105,9 @@ function Check(props){
 
 }
 export default function Temp(props){
-  
   return (
     <ReactFlowProvider>
-        <Check setEdges={props.setEdges} setNodes={props.setNodes} initialEdges={props.edges} initialNodes={props.nodes}/>
+        <Check team={props.team} setEdges={props.setEdges} setNodes={props.setNodes} initialEdges={props.edges} initialNodes={props.nodes}/>
     </ReactFlowProvider>
     )
 }

@@ -12,8 +12,8 @@ export default function SendInvite(props){
         e.preventDefault();
 
         axios.post("http://localhost:5001/invite/send"+location.pathname,{
-            "toInvite":userName,
-            "role":role
+            "toInvite":userName.trim(),
+            "role":role.trim()
         },{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{
             props.setInviteVis(false)
         }).catch(e=>{
@@ -37,7 +37,7 @@ export default function SendInvite(props){
                 </div>
             </div>
             <form onSubmit={handleSubmit} className="flex gap-4 justify-center items-center outlin px-4 mt-4">
-                <input onChange={(e)=>setUserName(e.target.value)} required pattern="[' ']*[^' ']+[' ']*" className=" outline-none w-1/2 border-b-2 border-blue-700 px-2 py-1 " placeholder="username" type="text" />
+                <input onChange={(e)=>setUserName(e.target.value)} required pattern="[' ']*[^' ']+[' ']*" className="outline-none w-1/2 border-b-2 border-blue-700 px-2 py-1 " placeholder="username" type="text" />
                 <input onChange={(e)=>setRole(e.target.value)} required className=" outline-none w-1/2 border-b-2 border-blue-700 px-2 py-1 " placeholder="role" type="text" />
                 <button type='submit' className="flex justify-center items-center rounded-full p-[5px] cursor-pointer bg-blue-700 text-white text-2xl ml-4 ">
                     <AiOutlineUsergroupAdd/>

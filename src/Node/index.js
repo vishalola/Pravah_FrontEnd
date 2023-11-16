@@ -1,7 +1,6 @@
 import Editable from "./Editable"
 import Description from "./Description"
 import { useEffect, useRef,useState } from "react"
-// import Tasks from "./Tasks";
 import Tasks from "./Tasks_v2";
 import ColorPalette from "./colorPalette";
 export default function Node(props){
@@ -37,7 +36,7 @@ export default function Node(props){
                 <Description changeDesc={setDesc} desc={props.desc} maxWidth={150}/>
             </div>
             <div className="absolute left-[100%] top-1">
-                <Tasks tasks={props.tasks} setActive={setIsActive}/>
+                <Tasks team={props.team} nodeID={props.nodeID} setActive={setIsActive}/>
             </div>
         </div>
     )

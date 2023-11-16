@@ -1,14 +1,24 @@
-import { useState,useRef } from "react";
+import axios from "axios";
+import { useState,useRef, useEffect } from "react";
 import {AiOutlineUserAdd,AiOutlineClose} from 'react-icons/ai'
-
+import { useLocation } from "react-router-dom";
 export default function CustomAutoComplete(props){
 
     let [isSelected,setIsSelected] = useState(false);
     let [selected,setSelected] = useState('');
     let [userDivs,setUserDivs]=useState([]);
     let inputRef = useRef(null);
-    let users = ["Vishal Ola","Sahil Yadav","Pavitra Pandey"];
-
+    let location = useLocation();
+    let [users,setUsers] = useState([]);
+    let [userMap,setUserMap] = useState(new Map());
+    useEffect(()=>{
+        const newMap = new Map(userMap);
+        (props.team).forEach(mem=>{
+            newMap.set(mem[0],mem[1]);
+            setUsers(user=>[...user,mem[0]]);
+        })
+        setUserMap(newMap);
+    },[props.team])
     let handleChange = e=>{
         setIsSelected(false);
         setSelected('');
@@ -29,9 +39,22 @@ export default function CustomAutoComplete(props){
     let handleAdd = ()=>{
         if(isSelected)
         {
-            props.isAssigned(true);
-            props.setAssigned(selected);
-            props.close(false);
+            // make a call to the backend here only.
+            let projectId = location.pathname.substring(1);
+            axios.post("http://localhost:5001/task/assign",{
+                projectID:projectId, 
+                nodeID:props.nodeID, 
+                taskID:props.taskID,
+                assignedTo:userMap.get(selected)
+            },{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{
+
+                props.isAssigned(true);
+                props.setAssigned(selected);
+                props.close(false);
+
+            }).catch(e=>{
+                console.log(e);
+            })
         }
     }
     return(

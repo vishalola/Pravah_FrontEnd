@@ -8,13 +8,23 @@ import Tasks from "./Sections/Tasks";
 import Home from "./Sections/Home";
 import Profile from "./Sections/Profile";
 import { useState,useEffect } from "react";
+import axios from "axios";
 function App() {
-  let [email,setEmail] = useState('vishalola555@gmail.com');
-  let [name,setName] = useState('Vishal Ola');
-  let [userName,setUserName] = useState('vishalola21');
-
-  let [isLoggedIn,setIsLoggedIn] = useState(true);
-  return (
+  let [email,setEmail] = useState('');
+  let [name,setName] = useState('');
+  let [userName,setUserName] = useState('');
+  let [isLoggedIn,setIsLoggedIn] = useState(false);
+  useEffect(()=>{
+    axios.get("http://localhost:5001/fetchDetails",{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{
+      setIsLoggedIn(true);
+      setEmail(res.data.email);
+      setName(res.data.name);
+      setUserName(res.data.userName);
+    }).catch(e=>{ 
+      console.log(e);
+    })
+  },[])
+  return ( 
     <>
     <Slider isLoggedIn={isLoggedIn}/>
     <Routes>

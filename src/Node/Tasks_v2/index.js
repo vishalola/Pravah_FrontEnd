@@ -3,27 +3,57 @@ import Item from './item.js'
 import {useEffect, useState} from 'react'
 import {RiAddCircleLine} from 'react-icons/ri'
 import CircularProgressWithLabel from './progress.js'
+import axios from 'axios'
+import { useLocation } from 'react-router-dom'
 export default function Tasks(props){
 
-    const[vis,setVis] = useState(false);
+    const [vis,setVis] = useState(false);
     const [tasksDone,setDone] = useState(0);
     const [task,setTask] = useState('');
     const [taskList,setTaskList] = useState([]);
-
+    const location = useLocation();
     useEffect(()=>{
-        (props.tasks).forEach(tsk=>{
-            if(tsk[2]==="true")
-            {
-                setDone(done=>[++done]);
-            }
-            setTaskList(tas=>[...tas,<Item setTasksDone={setDone} isCompleted={(tsk[2]==="true"?true:false)} task={tsk[0]} assigned={tsk[1]}/>])
+        // fetch tasks for this project id and node id from the backend and update taskList:
+        let projectId = location.pathname.substring(1);
+        axios.post("http://localhost:5001/task/fetchByID",{
+            projectID:projectId,
+            nodeID:props.nodeID
+        },{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{
+            let data = res.data.tasks;
+            data.forEach(dat=>{
+                if(dat.isCompleted===true)
+                {
+                    setDone(count=>++count);
+                }
+                setTaskList(list=>[...list,<Item projectID={projectId} team={props.team} nodeID={props.nodeID} taskID={dat.taskID}  setTasksDone={setDone} isCompleted={dat.isCompleted} task={dat.title} isAssigned={dat.isAssigned} assigned={dat.assignedTo}/>])
+            })
+        }).catch(e=>{
+            console.log(e);
         })
-    },[props.tasks])
+
+    },[])
     let handleTaskAdd = (e)=>{
         e.preventDefault();
         if(task!=='')
         {
-            setTaskList(list=>[...list,<Item setTasksDone={setDone} isCompleted={false} task={task} assigned="Unassigned"/>])
+            // first send this to backend and then update
+            let projectId = location.pathname.substring(1);
+            axios.post("http://localhost:5001/task/create",{
+                title:task, 
+                projectID:projectId, 
+                nodeID:props.nodeID, 
+                taskID:taskList.length+1,
+                isAssigned:false,
+                isCompleted:false, 
+                assignedTo:"Unassigned"
+
+            },{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{
+                
+                setTaskList(list=>[...list,<Item team={props.team} nodeID={props.nodeID} taskID={taskList.length+1} projectID={projectId}  setTasksDone={setDone} isCompleted={false} task={task} isAssigned={false} assigned="Unassigned"/>])
+
+            }).catch(e=>{
+                console.log(e);
+            })
         }
     }
     useEffect(()=>{

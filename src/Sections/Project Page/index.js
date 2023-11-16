@@ -24,6 +24,7 @@ export default function ProjectPage(props){
     const [nodes,setNodes] = useState([]);
     const [projectID,setProjectID]= useState('');
     const [projects,setProjects] = useState([]);
+    const [team, setTeam] = useState([]);
     let fetchProject = ()=>{
         setProjects([])
         axios.get("http://localhost:5001/project/view",{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{
@@ -82,28 +83,20 @@ export default function ProjectPage(props){
         else
         {
             axios.get("http://localhost:5001/project/open"+location.pathname,{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{
-            setProjectID(location.pathname.substring(1));
+                
+                setProjectID(location.pathname.substring(1));
                 let data = res.data;
                 setProjectTitle(data.name);
                 let nodeData = data.nodes;
                 let edgeData = data.edgeList;
-                let tempTasks = [
-                    {
-                        title:"Temp try",
-                        assignedTo:"Pavitra Pandey",
-                        isCompleted:true,
-                    },
-                    {
-                        title:"Temp try Second",
-                        assignedTo:"Pavitra Pandey",
-                        isCompleted:false,
-                    }
-                ]
+                setTeam(data.usersPerm);
                 nodeData.forEach(node=>{
                     setNodes(nodes=>[...nodes,{id:`${node.id}`,type:"special",position:{x:node.position[0],y:node.position[1]},data:{
+
                         title:node.title,
                         desc:node.description,
-                        tasks :node.taskList
+                        teamList:data.usersPerm
+
                     }}])
                 })
                 edgeData.forEach(edge=>{
@@ -121,10 +114,10 @@ export default function ProjectPage(props){
             <BsArrowLeft/>
         </div>
         <ProjectTitle title={projectTitle}/>
-        <Temp setEdges={setEdges} setNodes={setNodes} edges={edges} nodes={nodes}/>
+        <Temp team={team} setEdges={setEdges} setNodes={setNodes} edges={edges} nodes={nodes}/>
         <Dock fetchProject={fetchProject} handleSave={handleSave} setInviteVis={setInviteVis} setOpenVis = {setOpenVis} setNewVis={setNewVis} setTeamVis={setTeamVis}/>
         <OpenProject projects={projects} vis={openVis} setOpenVis={setOpenVis}/>
-        <Team vis={teamVis} setTeamVis={setTeamVis}/>
+        <Team team={team} vis={teamVis} setTeamVis={setTeamVis}/>
         <NewProject vis={newVis} setNewVis={setNewVis}/>
         <Invites/>
         <SendInvite vis={inviteVis} setInviteVis={setInviteVis}/>

@@ -68,7 +68,7 @@ export default function Slider(props){
             // how do i unmount this component if locationpath name is something else
             return ()=>{};
         }
-    },[location.pathname])
+    },[location.pathname,props.isLoggedIn])
     // Bhot paseena nikla hai ismpe , alag se component banake save karlena.
     return(
         <>
