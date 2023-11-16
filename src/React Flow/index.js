@@ -31,7 +31,14 @@ function Check(props){
     );
     useEffect(()=>{
       setNodes(props.initialNodes);
-      id=props.initialNodes.length+1;
+      for(let i=0;i<props.initialNodes.length;i++)
+      {
+        if(props.initialNodes[i].id>=id)
+        {
+          id = props.initialNodes[i].id + 1;
+        }
+      }
+
     },[props.initialNodes])
     useEffect(()=>{
       setEdges(props.initialEdges);
@@ -48,8 +55,8 @@ function Check(props){
     },[setEdges])
     let addNode = ()=>{
       let newID= getId();
-        setNodes(nods =>[...nods, { id:newID,type:"special",data:{title:'',desc:'',teamList:props.team}, position: { x:WIDTH/2 - 100, y: HEIGHT/2 -100}}])
-        props.setNodes(nods =>[...nods, { id:newID,type:"special",data:{title:'',desc:'',teamList:props.team}, position: { x:WIDTH/2 - 100, y: HEIGHT/2 -100}}])
+        setNodes(nods =>[...nods, { id:newID,type:"special",data:{title:'',desc:'',teamList:props.team,color:'white'}, position: { x:WIDTH/2 - 100, y: HEIGHT/2 -100}}])
+        props.setNodes(nods =>[...nods, { id:newID,type:"special",data:{title:'',desc:'',teamList:props.team,color:'white'}, position: { x:WIDTH/2 - 100, y: HEIGHT/2 -100}}])
 
     }
     const onConnectStart = useCallback((_, { nodeId }) => {
@@ -66,7 +73,7 @@ function Check(props){
             const newNode = {
               id,
               type:"special",
-              data:{title:'',desc:'',teamList:props.team},
+              data:{title:'',desc:'',teamList:props.team,color:'white'},
               // we are removing the half of the node width (75) to center the new node
               position: project({ x: event.clientX - left - 75, y: event.clientY - top })
             };

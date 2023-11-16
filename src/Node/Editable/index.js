@@ -1,7 +1,7 @@
-
 export default function Editable(props){
     let handleKey = (e)=>{ 
-        props.content(e.target.innerText)
+        props.setChange(true);
+        props.changeTitle(e.target.innerText)
     }
     return(
         <div className="w-full">

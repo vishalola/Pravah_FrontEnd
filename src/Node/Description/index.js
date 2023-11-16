@@ -1,7 +1,12 @@
 export default function Description(props){
-
+    let handleKey = (e)=>{ 
+        props.setChange(true);
+        props.changeDesc(e.target.innerText)
+    }
     return (
         <div contentEditable 
+
+        onKeyUp={handleKey}
         placeholder="Description.."
         className={`
         nodrag

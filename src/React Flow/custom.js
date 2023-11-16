@@ -6,7 +6,7 @@ export default  function CustomNode(props){
     return (
         <div>
             <Handle className='opacity-0' type='target' id="top" position={Position.Top}/>
-                <Node team={props.data.teamList} nodeID={props.id} title={props.data.title} desc={props.data.desc} />
+                <Node team={props.data.teamList} color={props.data.color} nodeID={props.id} title={props.data.title} desc={props.data.desc} />
             <Handle className='h-[15px] w-[15px] absolute bottom-0  rounded-full outline-none shadow-lg bg-white border-4 border-blue-700' type='source' id="bottom" position={Position.Bottom}/>
         </div>
     )
