@@ -5,12 +5,14 @@ import {RiAddCircleLine} from 'react-icons/ri'
 import CircularProgressWithLabel from './progress.js'
 import axios from 'axios'
 import { useLocation } from 'react-router-dom'
+import { CircularProgress } from '@mui/material'
 export default function Tasks(props){
 
     const [vis,setVis] = useState(false);
     const [tasksDone,setDone] = useState(0);
     const [task,setTask] = useState('');
     const [taskList,setTaskList] = useState([]);
+    const [adding,setAdding] = useState(false);
     const location = useLocation();
     useEffect(()=>{
         // fetch tasks for this project id and node id from the backend and update taskList:
@@ -25,6 +27,7 @@ export default function Tasks(props){
                 {
                     setDone(count=>++count);
                 }
+                console.log(dat.title)
                 setTaskList(list=>[...list,<Item projectID={projectId} team={props.team} nodeID={props.nodeID} taskID={dat.taskID}  setTasksDone={setDone} isCompleted={dat.isCompleted} task={dat.title} isAssigned={dat.isAssigned} assigned={dat.assignedTo}/>])
             })
         }).catch(e=>{
@@ -36,6 +39,8 @@ export default function Tasks(props){
         e.preventDefault();
         if(task!=='')
         {
+            setAdding(true);
+
             // first send this to backend and then update
             let projectId = location.pathname.substring(1);
             axios.post("http://localhost:5001/task/create",{
@@ -50,9 +55,12 @@ export default function Tasks(props){
             },{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{
                 
                 setTaskList(list=>[...list,<Item team={props.team} nodeID={props.nodeID} taskID={taskList.length+1} projectID={projectId}  setTasksDone={setDone} isCompleted={false} task={task} isAssigned={false} assigned="Unassigned"/>])
+                setAdding(false);
+
 
             }).catch(e=>{
                 console.log(e);
+                setAdding(false);
             })
         }
     }
@@ -78,16 +86,22 @@ export default function Tasks(props){
             <div className='absolute top-[50px] outlin'>
                <CircularProgressWithLabel value={(tasksDone/taskList.length || 0)*100}/>
             </div>
-           {vis &&  <div className='outlin px-4 absolute left-[100%] top-0 ' >
+           {<div className={`${vis?'':'hidden'} outlin px-4 absolute left-[100%] top-0`}>
                 <div className=' flex flex-col rounded-lg shadow-xl  bg-white p-4 '>
                     <form onSubmit={handleTaskAdd} className='flex min-w-[400px] justify-evenly outlin items-center my-3 gap-3 w-full'>
                             {/* <TextField  onChange={(e)=>setTask(e.target.value)} required className='nodrag ' label="add task" variant='outlined'/> */}
                             <input onChange={(e)=>setTask(e.target.value)} required placeholder='add task'  className='nodrag placeholder:opacity-50 placeholder:text-black   placeholder:font-light px-3 py-2 border-[1px] w-full outline-none bg-inherit' type="text" />
                             {/* <FreeSolo assigned={setAssigned}/> */}
                             {/* <input required placeholder='assign user'  className='h-full placeholder:opacity-50 placeholder:text-black  placeholder:font-light px-2 py-1 border-[1px] w-[120px] outline-none bg-inherit ' type="text" /> */}
-                        <button type='submit' className='bg-blue-700 text-white text-4xl rounded-full flex justify-center items-center'>
-                            <RiAddCircleLine/>
-                        </button>
+                        
+                            {!adding?(
+                            <button type='submit' className='bg-blue-700 text-white text-4xl rounded-full flex justify-center items-center'>
+                                <RiAddCircleLine/>
+                            </button>):(
+                                <div className=''>
+                                    <CircularProgress className='text-blue-700 h-8 w-8'/>
+                                </div>
+                            )}
                     </form>
                     <div className='bg-[#ebebebb5] rounded-lg px-2  text-black '>
                         {taskList}

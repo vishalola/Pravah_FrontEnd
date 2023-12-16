@@ -6,15 +6,20 @@ import axios from 'axios';
 export default function Invites(props){
     const [vis,setVis] = useState(false);
     const [invites,setInvites] = useState([]);
+    const [checking,setChecking] = useState(true);
     useEffect(()=>{
+
         handleClick()
     },[])
     let handleClick = ()=>{
+        setChecking(true);
         axios.get("http://localhost:5001/invite/view",{ headers: { Authorization:localStorage.getItem('jwtToken') }}).then(res=>{
                 let data = res.data.invites;
                 setInvites(data);
+                setChecking(false);
         }).catch(e=>{
             console.log(e);
+            setChecking(false);
         })
     }
     return (
@@ -25,13 +30,16 @@ export default function Invites(props){
         text-4xl border-b-2 border-blue-700
         ">
             <div onClick={()=>{
+                if(!vis)
+                {
+                    handleClick();
+                }
                 setVis(!vis)
-                handleClick();
                 }} className='px-2 py-1 hover:bg-[#d7d7d7] cursor-pointer'>
                 {!vis && <PiEnvelopeOpenThin/>}
                 {vis && <RxCross1/>}
             </div>
-            {vis && <InviteBox update={handleClick} invites={invites}/>}
+            {vis && <InviteBox checking={checking} update={handleClick} invites={invites}/>}
         </div>
     )
 }

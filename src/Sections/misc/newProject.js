@@ -1,3 +1,4 @@
+import { CircularProgress } from '@mui/material';
 import axios from 'axios';
 import { useEffect,useState } from 'react';
 import {AiOutlineClose} from 'react-icons/ai'
@@ -7,6 +8,7 @@ export default function NewProject(props){
     let navigate = useNavigate();
     let location = useLocation();
     let [projectName,setProjectName] = useState('');
+    let [creating,setCreating] = useState(false);
     let handleClose=(e)=>{
         if(location.pathname==="/new")
         {
@@ -19,16 +21,19 @@ export default function NewProject(props){
     }
     let handleSubmit = (e)=>{
 
+        setCreating(true);
         e.preventDefault();
         axios.post("http://localhost:5001/project/save",{
             "name":projectName,
             "isNew":true,
         },{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{
             let url = res.data.projectID;
+            setCreating(false);
             props.setNewVis(false);
             navigate("/"+url);
 
         }).catch(e=>{
+            setCreating(false);
             console.log(e);
         })
     }
@@ -48,9 +53,13 @@ export default function NewProject(props){
            </div>
            <form onSubmit={handleSubmit} className="flex outlin justify-center">
             <input onChange={e=>setProjectName(e.target.value)} required placeholder="Untitled Project" className="p-2 outline-none border-b-2 border-blue-700" type="text" name="" id="" />
+            {creating?(
+            <div className='ml-4 flex items-center justify-center'>
+                <CircularProgress className='text-blue-700 h-8 w-8 '/>
+            </div>):(
             <button type='submit' className="flex justify-center items-center ml-4 px-2 bg-blue-700 text-white rounded-sm cursor-pointer">
                 Create
-            </button>
+            </button>)}
            </form>
         </div>
     )

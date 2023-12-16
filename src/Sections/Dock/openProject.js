@@ -1,8 +1,5 @@
-import { useEffect,useState } from 'react'
-import ProjectItem from './projectItem'
-import axios from 'axios';
+import { CircularProgress } from "@mui/material"
 export default function OpenProject(props){
-
     return (
 
         <div className={`
@@ -19,8 +16,18 @@ export default function OpenProject(props){
             </div>
             
             <div onClick={()=>props.setOpenVis(false)} className="outlin bg-[#b1b1b110] mx-4 rounded-lg p-2 max-h-[200px] overflow-scroll">
-                {/* create new project */}
-                {props.projects}
+
+                {
+                        !props.checking?(
+                            (props.projects).length!==0?props.projects:(
+                                <div className="flex justify-center items-center py-2 text-slate-400 select-none"> No Projects</div>
+                            )
+                        ):(          
+                            <div className="text-center p-2">
+                                <CircularProgress className="h-6 w-6 text-blue-700"/>
+                            </div>
+                        )
+                }
 
             </div>
             <div className="select-none absolute outlin flex bottom-0 right-4 gap-6 ">

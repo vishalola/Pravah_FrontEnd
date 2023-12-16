@@ -28,7 +28,11 @@ export default function Team(props){
                 Your Team
             </div>
             <div className="w-full outlin my-2 bg-[#b1b1b110]  rounded-lg p-2 max-h-[500px] overflow-scroll">
-                {teamList}
+                {teamList.length===0?(
+                    <div className='text-center text-slate-400'>
+                        No Team
+                    </div>
+                ):(teamList)}
             </div>
 
             <div onClick={()=>props.setTeamVis(false)} className='absolute cursor-pointer rounded border-blue-700 outline-[1px] px-2 hover:outline text-blue-700 left-[-60px] text-3xl'>

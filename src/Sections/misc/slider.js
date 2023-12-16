@@ -15,11 +15,11 @@ export default function Slider(props){
         KUTE.to("#profile",{attr:{fill:"black"}}).start();
         KUTE.to("#navbar",{attr:{fill:"white"}}).start();
 
-        if(props.isLoggedIn===false)
+        if(!props.checking && props.isLoggedIn===false)
         {
             navigate("/login");
         }
-        else
+        else if(!props.checking && props.isLoggedIn)
         {
             navigate("/profile");
         }
@@ -40,11 +40,11 @@ export default function Slider(props){
         KUTE.to("#tasks",{attr:{fill:"black"}}).start();
         KUTE.to("#profile",{attr:{fill:"white"}}).start();
         KUTE.to("#navbar",{attr:{fill:"white"}}).start();
-        if(props.isLoggedIn===false)
+        if(!props.checking && props.isLoggedIn===false)
         {
             navigate("/login");
         }
-        else
+        else if(!props.checking && props.isLoggedIn)
         {
             navigate("/tasks");
         }
@@ -68,7 +68,7 @@ export default function Slider(props){
             // how do i unmount this component if locationpath name is something else
             return ()=>{};
         }
-    },[location.pathname,props.isLoggedIn])
+    },[location.pathname,props.isLoggedIn,props.checking])
     // Bhot paseena nikla hai ismpe , alag se component banake save karlena.
     return(
         <>

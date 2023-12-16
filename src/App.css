@@ -12,6 +12,7 @@ animation: scrollBounce 1s infinite ease-in-out;
 .homeBgAnimate{
 animation: bgChangeHome 1s forwards ease;
 }
+
 @keyframes bgChange {
 from{
   background-color: white;

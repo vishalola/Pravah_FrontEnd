@@ -1,28 +1,31 @@
 import {AiOutlineUser,AiOutlineMail,AiOutlineFileAdd} from "react-icons/ai"
 import {MdAlternateEmail} from 'react-icons/md'
-import {CgScrollV} from 'react-icons/cg'
+import {CgScrollV, CgTemplate} from 'react-icons/cg'
 import ProjectItem from "../Dock/projectItem"
 import { useNavigate } from "react-router-dom"
 import {PiSignOutBold} from 'react-icons/pi'
-import { useEffect,useState } from "react"
+import { useEffect,useState,useRef } from "react"
 import axios from "axios"
+import { CircularProgress } from "@mui/material"
 export default function Profile(props){
     const [project,setProjects] = useState([]);
+    const [checking,setChecking] = useState(true);
     let navigate = useNavigate();
     useEffect(()=>{
-        props.details();
-        
-        axios.get("http://localhost:5001/project/view",{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{
-            let projects = res.data.projects;
-            for(let i=0;i<projects.length;i++)
+            if(props.isLoggedIn)
             {
-                axios.get("http://localhost:5001/project/view/"+projects[i],{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{
-                    let data = res.data;
-                    setProjects(pr=>[...pr,<ProjectItem projectId={projects[i]} name={data.name} owner={data.owner} creationDate="05-11-2023"/>])
+                setProjects([]);
+                setChecking(true);
+                axios.get("http://localhost:5001/project/view",{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{
+                    let projects = res.data.projects;
+                    for(let i=0;i<projects.length;i++)
+                    {
+                        setProjects(pr=>[...pr,<ProjectItem key={i} projectId={projects[i].ID} name={projects[i].name} owner={projects[i].owner} creationDate="05-11-2023"/>])
+                    }
+                    setChecking(false);
                 })
             }
-        })
-    },[])
+    },[props.isLoggedIn])
     return (
         <>
         <div className=
@@ -79,7 +82,14 @@ export default function Profile(props){
             bg-blue-600 text-white shadow-lg shadow-[#1f1f1f47] rounded-xl p-4 mt-10 w-[500px] ">
                     
                     <div className="outlin rounded-md  w-full px-3 py-1 my-4">
-                        {project}
+                        {checking?(
+                        <div className="text-center">
+                            <CircularProgress className="text-white"/>
+                        </div>):(
+                            project.length!==0?project:(
+                        <div className="outlin text-center text-slate-200">
+                            No Projects Yet :&#40;
+                        </div>))}
                     </div>
                     <div onClick={()=>navigate("/new")} className="cursor-pointer hover:outline-none bg-blue-600 hover:bg-[white] transition-all hover:text-blue-700 flex items-center justify-center gap-2 outline px-3 py-2">
                         <div className="text-xl">

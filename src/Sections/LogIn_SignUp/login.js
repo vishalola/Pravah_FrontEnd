@@ -12,6 +12,7 @@ export default function Login(props){
     const navigate=useNavigate();
 
     let handleClick=(e)=>{
+        console.log("click handeled")
         setLoading(true);
         setUserCheck(true);
         setPassCheck(true);
@@ -28,13 +29,15 @@ export default function Login(props){
             let token=res.data.token;
             // save this token in cookies or something
             localStorage.setItem("jwtToken",token);
-            axios.get("http://localhost:5001/auth/detail/"+email).then(res=>{
+            axios.get("http://localhost:5001/fetchDetails",{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{
                 let details=res.data;
                 props.setName(details.name);
                 props.setEmail(details.email)
                 props.setUserName(details.userName);
                 props.setLog(true);
                 navigate("/profile");
+            }).catch(e=>{
+                console.log(e)
             })
         }).catch(e=>{
             setLoading(false);

@@ -25,23 +25,20 @@ export default function ProjectPage(props){
     const [projectID,setProjectID]= useState('');
     const [projects,setProjects] = useState([]);
     const [team, setTeam] = useState([]);
+    const [checking,setChecking] = useState(true)
     let fetchProject = ()=>{
         setProjects([])
-
+        setChecking(true);
         // this is wrong way ig , try to fix at backend, get all data at once
-
         axios.get("http://localhost:5001/project/view",{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{
             let projects = res.data.projects;
             for(let i=0;i<projects.length;i++)
             {
-                axios.get("http://localhost:5001/project/view/"+projects[i],{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{
-                    let data = res.data;
-                    setProjects(pr=>[...pr,<ProjectItem projectId={projects[i]} name={data.name} owner={data.owner} creationDate="05-11-2023"/>])
-                })
+                setProjects(pr=>[...pr,<ProjectItem key={i} projectId={projects[i].ID} name={projects[i].name} owner={projects[i].owner} creationDate="05-11-2023"/>])
             }
+            setChecking(false);
         })
     }
-
     let handleSave = ()=>{
 
         let tempNodes = [];
@@ -120,7 +117,7 @@ export default function ProjectPage(props){
         <ProjectTitle title={projectTitle}/>
         <Temp team={team} setEdges={setEdges} setNodes={setNodes} edges={edges} nodes={nodes}/>
         <Dock fetchProject={fetchProject} handleSave={handleSave} setInviteVis={setInviteVis} setOpenVis = {setOpenVis} setNewVis={setNewVis} setTeamVis={setTeamVis}/>
-        <OpenProject projects={projects} vis={openVis} setOpenVis={setOpenVis}/>
+        <OpenProject checking={checking} projects={projects} vis={openVis} setOpenVis={setOpenVis}/>
         <Team team={team} vis={teamVis} setTeamVis={setTeamVis}/>
         <NewProject vis={newVis} setNewVis={setNewVis}/>
         <Invites/>

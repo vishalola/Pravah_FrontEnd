@@ -14,6 +14,9 @@ export default function Item(props){
                     
                         if(!completed)
                         {
+                            setCompleted(true);
+                            props.setTasksDone(task=>++task);
+
                             axios.post("http://localhost:5001/task/update",{
                                 "projectID":props.projectID, 
                                 "nodeID":props.nodeID,
@@ -21,15 +24,17 @@ export default function Item(props){
                                 "isCompleted":true,
                             },{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{
                                 
-                                props.setTasksDone(task=>++task);
-                                setCompleted(true);
-
                             }).catch(e=>{
                                 console.log(e);
+                                setCompleted(false);
+                                props.setTasksDone(task=>--task);
+
                             })
                         }
                         else
                         {
+                            setCompleted(false);
+                            props.setTasksDone(task=>--task);
                             axios.post("http://localhost:5001/task/update",{
                                 "projectID":props.projectID, 
                                 "nodeID":props.nodeID,
@@ -37,11 +42,11 @@ export default function Item(props){
                                 "isCompleted":false,
                             },{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{
                                 
-                                props.setTasksDone(task=>--task);
-                                setCompleted(false);
-
                             }).catch(e=>{
                                 console.log(e);
+                                setCompleted(true);
+                                props.setTasksDone(task=>++task);
+
                             })
                         }
 

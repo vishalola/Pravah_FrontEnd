@@ -14,16 +14,21 @@ function App() {
   let [name,setName] = useState('');
   let [userName,setUserName] = useState('');
   let [isLoggedIn,setIsLoggedIn] = useState(false);
-
-  let fetchDetails = ()=>{
+  let [isChecking,setIsChecking] = useState(true);
+  let fetchDetails = async ()=>{
+    // before this check if jwt token even exist
       axios.get("http://localhost:5001/fetchDetails",{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{
         console.log("i was run")
         setIsLoggedIn(true);
         setEmail(res.data.email);
         setName(res.data.name);
         setUserName(res.data.userName);
+        setIsChecking(false);
+        return true;
       }).catch(e=>{ 
         console.log(e);
+        setIsChecking(false);
+        return false;
       })
   }
   useEffect(()=>{
@@ -31,10 +36,10 @@ function App() {
   },[])
   return ( 
     <>
-    <Slider isLoggedIn={isLoggedIn}/>
+    <Slider checking={isChecking} isLoggedIn={isLoggedIn}/>
     <Routes>
       <Route path="/" element={<Home/>}/>
-      <Route path="/profile" element={<Profile details={fetchDetails} name={name} email={email} userName={userName}/>}/>
+      <Route path="/profile" element={<Profile details={fetchDetails} isLoggedIn={isLoggedIn} name={name} email={email} userName={userName}/>}/>
       <Route path="/tasks" element={<Tasks/>}/>
       <Route path="/:pid" element={<ProjectPage/>}/>
       <Route path="/login" element={<Login setLog={setIsLoggedIn} setUserName={setUserName} setEmail={setEmail} setName={setName}/>}/>

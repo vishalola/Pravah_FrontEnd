@@ -1,4 +1,4 @@
-import axios from "axios";
+import { CircularProgress } from "@mui/material";
 import { useEffect,useState } from "react";
 import InviteItem from "./inviteItem"
 export default function InviteBox(props){
@@ -23,7 +23,11 @@ export default function InviteBox(props){
                     Invitations
                 </div>
                 <div className="max-h-[400px] rounded-lg mx-2 bg-[#f1f1f190] overflow-scroll">
-                    {invites}
+                    {!props.checking?(invites.length!==0?invites:(
+                        <div className="flex justify-center items-center py-4 text-slate-400 select-none"> No Invites</div>
+                    )):(<div className="flex items-center justify-center p-3 ">
+                        <CircularProgress className="h-6 w-6 text-blue-700"/>
+                    </div>)}
                 </div>
             </div>
         )
