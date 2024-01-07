@@ -8,6 +8,7 @@ import {useState} from 'react';
 let id = 1;
 const getId = () => `${id++}`;
 function Check(props){
+
     let HEIGHT = window.innerHeight;
     let WIDTH = window.innerWidth;
 
@@ -112,9 +113,10 @@ function Check(props){
 
 }
 export default function Temp(props){
+
   return (
     <ReactFlowProvider>
-        <Check team={props.team} setEdges={props.setEdges} setNodes={props.setNodes} initialEdges={props.edges} initialNodes={props.nodes}/>
+        <Check  team={props.team} setEdges={props.setEdges} setNodes={props.setNodes} initialEdges={props.edges} initialNodes={props.nodes}/>
     </ReactFlowProvider>
     )
 }

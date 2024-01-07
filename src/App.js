@@ -9,14 +9,25 @@ import Home from "./Sections/Home";
 import Profile from "./Sections/Profile";
 import { useState,useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 function App() {
   let [email,setEmail] = useState('');
   let [name,setName] = useState('');
   let [userName,setUserName] = useState('');
   let [isLoggedIn,setIsLoggedIn] = useState(false);
   let [isChecking,setIsChecking] = useState(true);
+  let navigate = useNavigate();
+  let handleSignOut = ()=>{
+    localStorage.removeItem('jwtToken');
+    setIsLoggedIn(false);
+    setEmail('');
+    setName('');
+    setUserName('');
+    navigate('/');
+  }
   let fetchDetails = async ()=>{
     // before this check if jwt token even exist
+      setIsChecking(true);
       axios.get("http://localhost:5001/fetchDetails",{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{
         console.log("i was run")
         setIsLoggedIn(true);
@@ -39,9 +50,9 @@ function App() {
     <Slider checking={isChecking} isLoggedIn={isLoggedIn}/>
     <Routes>
       <Route path="/" element={<Home/>}/>
-      <Route path="/profile" element={<Profile details={fetchDetails} isLoggedIn={isLoggedIn} name={name} email={email} userName={userName}/>}/>
+      <Route path="/profile" element={<Profile logOut={handleSignOut} details={fetchDetails} isLoggedIn={isLoggedIn} name={name} email={email} userName={userName}/>}/>
       <Route path="/tasks" element={<Tasks/>}/>
-      <Route path="/:pid" element={<ProjectPage/>}/>
+      <Route path="/:pid" element={<ProjectPage />}/>
       <Route path="/login" element={<Login setLog={setIsLoggedIn} setUserName={setUserName} setEmail={setEmail} setName={setName}/>}/>
       <Route path = "/signup" element={<SignUp/>}/>
     </Routes>

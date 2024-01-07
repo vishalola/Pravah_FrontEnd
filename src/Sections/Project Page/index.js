@@ -29,7 +29,6 @@ export default function ProjectPage(props){
     let fetchProject = ()=>{
         setProjects([])
         setChecking(true);
-        // this is wrong way ig , try to fix at backend, get all data at once
         axios.get("http://localhost:5001/project/view",{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{
             let projects = res.data.projects;
             for(let i=0;i<projects.length;i++)
@@ -97,7 +96,8 @@ export default function ProjectPage(props){
                         title:node.title,
                         desc:node.description,
                         teamList:data.usersPerm,
-                        color:node.color
+                        color:node.color,
+                        name:props.name
                     }}])
                 })
                 edgeData.forEach(edge=>{
@@ -108,6 +108,7 @@ export default function ProjectPage(props){
             })
         }
     },[location.pathname])
+
   
     return (
     <div className="overflow-hidden relative w-[100vw] h-[100vh] flex justify-center items-center">

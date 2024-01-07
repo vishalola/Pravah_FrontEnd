@@ -14,9 +14,13 @@ export default function Tasks(props){
     const [taskList,setTaskList] = useState([]);
     const [adding,setAdding] = useState(false);
     const location = useLocation();
+
     useEffect(()=>{
         // fetch tasks for this project id and node id from the backend and update taskList:
+        
         let projectId = location.pathname.substring(1);
+        setTaskList([])
+        setDone(0);
         axios.post("http://localhost:5001/task/fetchByID",{
             projectID:projectId,
             nodeID:props.nodeID
@@ -27,7 +31,6 @@ export default function Tasks(props){
                 {
                     setDone(count=>++count);
                 }
-                console.log(dat.title)
                 setTaskList(list=>[...list,<Item projectID={projectId} team={props.team} nodeID={props.nodeID} taskID={dat.taskID}  setTasksDone={setDone} isCompleted={dat.isCompleted} task={dat.title} isAssigned={dat.isAssigned} assigned={dat.assignedTo}/>])
             })
         }).catch(e=>{

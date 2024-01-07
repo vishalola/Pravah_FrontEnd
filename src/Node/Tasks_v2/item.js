@@ -1,5 +1,5 @@
 import {AiOutlineUser,AiOutlineUserAdd} from 'react-icons/ai'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import CustomAutoComplete from './customAuto';
 import axios from 'axios';
 export default function Item(props){
@@ -7,8 +7,25 @@ export default function Item(props){
     const [completed,setCompleted] = useState(props.isCompleted);
     const [isAssigned,setIsAssigned] = useState(props.isAssigned);
     const [assigned,setAssigned] = useState(props.assigned);
+    const [name,setName] = useState('');
+    let fetchDetails = ()=>{
+        // before this check if jwt token even exist
+          axios.get("http://localhost:5001/fetchDetails",{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{
+            setName(res.data.name);
+            // console.log("no error name is " + res.data.name);
+          }).catch(e=>{ 
+            console.log(e);
+          })
+      }
+   
+    // should only be editable by the assigned.
+    // if not assigned to anyone, should be editable 
+    useEffect(()=>{
+        fetchDetails();
+    },[])
+    // opacity-50 cursor-not-allowed and pointers-event-none in checkbox
     return(
-        <div className='flex gap-2 min-w-[400px] outlin p-3 items-center justify-between'>
+        <div className={`${(name===assigned || !isAssigned)?'':'opacity-50 cursor-not-allowed'} flex gap-2 min-w-[400px] outlin p-3 items-center justify-between`}>
             <div className='flex gap-3 items-center justify-center'>
                 <div onClick={()=>{
                     
@@ -50,7 +67,7 @@ export default function Item(props){
                             })
                         }
 
-                    }} className={`min-h-[15px] cursor-pointer ${completed?"bg-blue-500":"outline"} transition-all min-w-[15px]`}>
+                    }} className={`${(name===assigned || !isAssigned)?'':'pointer-events-none'} min-h-[15px] cursor-pointer ${completed?"bg-blue-500":"outline"} transition-all min-w-[15px]`}>
 
                 </div>
                 <div className={`outlin transition-all ${completed?"line-through opacity-50":""} text-sm`}>

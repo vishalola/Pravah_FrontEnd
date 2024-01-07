@@ -3,7 +3,7 @@ import {MdAlternateEmail} from 'react-icons/md'
 import {CgScrollV, CgTemplate} from 'react-icons/cg'
 import ProjectItem from "../Dock/projectItem"
 import { useNavigate } from "react-router-dom"
-import {PiSignOutBold} from 'react-icons/pi'
+import {PiSignOut} from 'react-icons/pi'
 import { useEffect,useState,useRef } from "react"
 import axios from "axios"
 import { CircularProgress } from "@mui/material"
@@ -11,6 +11,11 @@ export default function Profile(props){
     const [project,setProjects] = useState([]);
     const [checking,setChecking] = useState(true);
     let navigate = useNavigate();
+
+    let handleSignOut = ()=>{
+        props.logOut();
+    }
+
     useEffect(()=>{
             if(props.isLoggedIn)
             {
@@ -31,11 +36,9 @@ export default function Profile(props){
         <div className=
         {`h-[100vh] entranceAnimate flex justify-center items-center relative`}
         >
-            {/* <div className="absolute outline cursor-pointer z-[200] text-white text-4xl right-5 top-10">
-                <PiSignOutBold/>
-            </div> */}
+
             <div className="outlin p-2 flex md:flex-col">
-                <div className="
+                <div className="relative
                 flex flex-col justify-center gap-4
                 items-center outlin px-4
                 min-w-[250px] text-white">
@@ -45,6 +48,9 @@ export default function Profile(props){
                     </div>
                     <div className="font-light text-3xl">
                        {props.name}
+                    </div>
+                    <div onClick={handleSignOut} className="outlin absolute right-6 cursor-pointer text-white text-3xl">
+                        <PiSignOut/>
                     </div>
                     <div className={`bg-white shadow-lg shadow-[#1f1f1f69]  px-5 py-3 rounded-xl text-sm text-black`}>
                         <div className="flex  outlin my-1">         
