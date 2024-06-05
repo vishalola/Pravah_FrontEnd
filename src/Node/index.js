@@ -17,7 +17,7 @@ export default function Node(props){
 
     async function updateDetails(){
          
-       return  axios.post("http://localhost:5001/project/edit"+location.pathname,{
+       return  axios.post(`${process.env.REACT_APP_BACKEND_URL}/project/edit`+location.pathname,{
             "nodeID":props.nodeID,
             "description":desc,
             "title":title,

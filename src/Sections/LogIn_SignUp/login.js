@@ -21,7 +21,7 @@ export default function Login(props){
         let password=e.target[2].value
         
         // verifying from server if user exists: 
-        axios.post("http://localhost:5001/auth/login",{
+        axios.post(`${process.env.REACT_APP_BACKEND_URL}/auth/login`,{
             "email":email,
             "password":password
         }).then(res=>{
@@ -29,7 +29,7 @@ export default function Login(props){
             let token=res.data.token;
             // save this token in cookies or something
             localStorage.setItem("jwtToken",token);
-            axios.get("http://localhost:5001/fetchDetails",{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{
+            axios.get(`${process.env.REACT_APP_BACKEND_URL}/fetchDetails`,{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{
                 let details=res.data;
                 props.setName(details.name);
                 props.setEmail(details.email)

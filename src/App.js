@@ -10,6 +10,9 @@ import Profile from "./Sections/Profile";
 import { useState,useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import About from "./Sections/Home/About/about";
+import Features from './Sections/Home/Features'
+import Contact from './Sections/Home/Contact'
 function App() {
   let [email,setEmail] = useState('');
   let [name,setName] = useState('');
@@ -28,7 +31,7 @@ function App() {
   let fetchDetails = async ()=>{
     // before this check if jwt token even exist
       setIsChecking(true);
-      axios.get("http://localhost:5001/fetchDetails",{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{
+      axios.get(`${process.env.REACT_APP_BACKEND_URL}/fetchDetails`,{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{
         console.log("i was run")
         setIsLoggedIn(true);
         setEmail(res.data.email);
@@ -49,7 +52,12 @@ function App() {
     <>
     <Slider checking={isChecking} isLoggedIn={isLoggedIn}/>
     <Routes>
-      <Route path="/" element={<Home/>}/>
+      <Route path="/" element={<Home/>}>
+        <Route path="about" element={<About/>}/>
+        <Route path="features" element={<Features/>}/>
+        <Route path="contact" element={<Contact/>}/>
+
+      </Route>
       <Route path="/profile" element={<Profile logOut={handleSignOut} details={fetchDetails} isLoggedIn={isLoggedIn} name={name} email={email} userName={userName}/>}/>
       <Route path="/tasks" element={<Tasks/>}/>
       <Route path="/:pid" element={<ProjectPage />}/>

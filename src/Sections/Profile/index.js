@@ -21,7 +21,7 @@ export default function Profile(props){
             {
                 setProjects([]);
                 setChecking(true);
-                axios.get("http://localhost:5001/project/view",{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{
+                axios.get(`${process.env.REACT_APP_BACKEND_URL}/project/view`,{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{
                     let projects = res.data.projects;
                     for(let i=0;i<projects.length;i++)
                     {

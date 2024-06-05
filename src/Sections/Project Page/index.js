@@ -29,7 +29,7 @@ export default function ProjectPage(props){
     let fetchProject = ()=>{
         setProjects([])
         setChecking(true);
-        axios.get("http://localhost:5001/project/view",{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{
+        axios.get(`${process.env.REACT_APP_BACKEND_URL}/project/view`,{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{
             let projects = res.data.projects;
             for(let i=0;i<projects.length;i++)
             {
@@ -60,7 +60,7 @@ export default function ProjectPage(props){
             tempEdges.push([edges[i].id,edges[i].source,edges[i].target]);
         }
 
-        axios.post("http://localhost:5001/project/save",{
+        axios.post(`${process.env.REACT_APP_BACKEND_URL}/project/save`,{
             "name":projectTitle,
             "isNew":false,
             "projectID":projectID,
@@ -82,7 +82,7 @@ export default function ProjectPage(props){
         }
         else
         {
-            axios.get("http://localhost:5001/project/open"+location.pathname,{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{
+            axios.get(`${process.env.REACT_APP_BACKEND_URL}/project/open`+location.pathname,{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{
                 
                 setProjectID(location.pathname.substring(1));
                 let data = res.data;

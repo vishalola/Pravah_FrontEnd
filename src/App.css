@@ -12,7 +12,14 @@ animation: scrollBounce 1s infinite ease-in-out;
 .homeBgAnimate{
 animation: bgChangeHome 1s forwards ease;
 }
-
+.bgReveal{
+  animation: bgChangeReveal 1.5s forwards ease;
+}
+.blurEffect{
+  pointer-events: none;
+  background: linear-gradient(rgb(255, 255, 255),transparent);
+  backdrop-filter: blur(.5px);
+}
 @keyframes bgChange {
 from{
   background-color: white;
@@ -23,6 +30,14 @@ to{
   opacity:100%;
 }
 }
+@keyframes bgChangeReveal {
+  from{
+    opacity:0%;
+  }
+  to{
+    opacity:100%;
+  }
+  }
 @keyframes bgChangeHome {
 from{
   background-color:rgb(29, 78, 216);

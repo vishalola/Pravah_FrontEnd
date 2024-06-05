@@ -13,7 +13,7 @@ export default function Invites(props){
     },[])
     let handleClick = ()=>{
         setChecking(true);
-        axios.get("http://localhost:5001/invite/view",{ headers: { Authorization:localStorage.getItem('jwtToken') }}).then(res=>{
+        axios.get(`${process.env.REACT_APP_BACKEND_URL}/invite/view`,{ headers: { Authorization:localStorage.getItem('jwtToken') }}).then(res=>{
                 let data = res.data.invites;
                 setInvites(data);
                 setChecking(false);

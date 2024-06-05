@@ -9,7 +9,7 @@ export default function Tasks(props){
     let [assigned,setAssigned] = useState(0);
     let [tasksList,setTasksList] = useState([]);
     useEffect(()=>{
-      axios.get("http://localhost:5001/task/fetchByUser",{ headers: { Authorization:localStorage.getItem('jwtToken') } })
+      axios.get(`${process.env.REACT_APP_BACKEND_URL}/task/fetchByUser`,{ headers: { Authorization:localStorage.getItem('jwtToken') } })
       .then(res=>{
         let data = res.data.tasks;
         data.forEach(tsk=>{

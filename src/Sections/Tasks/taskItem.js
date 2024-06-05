@@ -15,7 +15,7 @@ export default function TaskItem(props){
                 <div onClick={(e)=>{
                         if(completed)
                         {
-                            axios.post("http://localhost:5001/task/update",{
+                            axios.post(`${process.env.REACT_APP_BACKEND_URL}/task/update`,{
                                 "projectID":props.projectID, 
                                 "nodeID":props.nodeID,
                                 "taskID":props.taskID,
@@ -31,7 +31,7 @@ export default function TaskItem(props){
                         }
                         else
                         {
-                            axios.post("http://localhost:5001/task/update",{
+                            axios.post(`${process.env.REACT_APP_BACKEND_URL}/task/update`,{
                                 "projectID":props.projectID, 
                                 "nodeID":props.nodeID,
                                 "taskID":props.taskID,

@@ -23,7 +23,7 @@ export default function NewProject(props){
 
         setCreating(true);
         e.preventDefault();
-        axios.post("http://localhost:5001/project/save",{
+        axios.post(`${process.env.REACT_APP_BACKEND_URL}/project/save`,{
             "name":projectName,
             "isNew":true,
         },{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{

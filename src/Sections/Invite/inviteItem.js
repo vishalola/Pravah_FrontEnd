@@ -5,7 +5,7 @@ import axios from 'axios'
 export default function InviteItem(props){
 
     let handleAccept=()=>{
-        axios.post("http://localhost:5001/invite/accept/"+props.projectID,{
+        axios.post( `${process.env.REACT_APP_BACKEND_URL}/invite/accept/`+props.projectID,{
             "action":true
         },{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{
             props.update();
@@ -14,7 +14,7 @@ export default function InviteItem(props){
         })
     }
     let handleReject=()=>{
-        axios.post("http://localhost:5001/invite/accept/"+props.projectID,{
+        axios.post(`${process.env.REACT_APP_BACKEND_URL}/invite/accept/`+props.projectID,{
             "action":false
         },{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{
             props.update();

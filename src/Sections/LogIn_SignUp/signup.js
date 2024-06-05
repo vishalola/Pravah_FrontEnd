@@ -28,7 +28,7 @@ export default function SignUp(){
         {
             // password matched
             setPassCheck(false);
-            axios.post("http://localhost:5001/auth/signup",{
+            axios.post(`${process.env.REACT_APP_BACKEND_URL}/auth/signup`,{
                 "name":name,
                 "userName":username,
                 "email":email,

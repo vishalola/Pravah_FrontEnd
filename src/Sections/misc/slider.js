@@ -24,14 +24,14 @@ export default function Slider(props){
             navigate("/profile");
         }
     }
-    let animateHome = ()=>{
+    let animateHome = (path)=>{
         KUTE.to("#navbar",{path:homePath},{easing: "easingBackOut"}).start();
         KUTE.to("#home",{attr:{fill:"white"}}).start();
         KUTE.to("#tasks",{attr:{fill:"black"}}).start();
         KUTE.to("#profile",{attr:{fill:"black"}}).start();
         // KUTE.to("#navbar",{attr:{fill:"white"}}).start();
         KUTE.to("#navbar",{attr:{fill:"#1D4ED8"}}).start();
-        navigate("/");
+        navigate(path);
 
     }
     let animateTasks = ()=>{
@@ -51,9 +51,9 @@ export default function Slider(props){
     }
     useEffect(()=>{
         
-        if(location.pathname==="/")
+        if(location.pathname==="/" || location.pathname==="/about" || location.pathname==="/features" || location.pathname==="/contact")
         {
-            animateHome();
+            animateHome(location.pathname);
         }
         else if(location.pathname==="/profile")
         {
@@ -72,11 +72,11 @@ export default function Slider(props){
     // Bhot paseena nikla hai ismpe , alag se component banake save karlena.
     return(
         <>
-        {location.pathname === "/" || location.pathname === "/profile" || location.pathname === "/tasks" ?
+        {location.pathname === "/" || location.pathname === "/profile" || location.pathname === "/tasks" || location.pathname==="/about" || location.pathname==="/features" || location.pathname==="/contact"?
         (<svg className='z-[10] fixed w-[100%] h-[120px] md:h-auto ' viewBox="0 0 1512 183" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path id='navbar' d={homePath} fill="#1D4ED8"/> 
             <path id='home' d="M760.551 52.7583C759.482 51.7472 757.809 51.7472 756.74 52.7583L743.302 65.4626C742.471 66.2486 742 67.3423 742 68.4864V83.9369C742 86.235 743.863 88.0982 746.161 88.0982H750.323C752.621 88.0982 754.484 86.235 754.484 83.9369V77.0012C754.484 76.2352 755.105 75.6142 755.871 75.6142H761.42C762.186 75.6142 762.807 76.2352 762.807 77.0012V83.9369C762.807 86.235 764.67 88.0982 766.968 88.0982H771.13C773.428 88.0982 775.291 86.235 775.291 83.9369V68.4864C775.291 67.3423 774.82 66.2486 773.988 65.4626L760.551 52.7583Z" fill="#FEFEFE"/>
-            <rect className='cursor-pointer' onClick={animateHome} width="57.8589" height="57.7181" transform="translate(730 41.8442)" fill="white" fillOpacity="0.00"/>
+            <rect className='cursor-pointer' onClick={()=>{animateHome("/")}} width="57.8589" height="57.7181" transform="translate(730 41.8442)" fill="white" fillOpacity="0.00"/>
             <g  id='profile' fill='black'>
                 <path d="M613.873 54.618C612.309 52.9297 610.125 52 607.715 52C605.291 52 603.1 52.9241 601.543 54.6019C599.97 56.2983 599.203 58.6037 599.383 61.0932C599.74 66.0046 603.477 69.9999 607.715 69.9999C611.952 69.9999 615.683 66.0054 616.045 61.0948C616.228 58.6278 615.456 56.3272 613.873 54.618Z" />
                 <path d="M621.857 87.9998H593.572C593.202 88.0046 592.835 87.9268 592.499 87.7721C592.162 87.6174 591.865 87.3896 591.627 87.1054C591.105 86.481 590.894 85.6284 591.05 84.7662C591.728 81.0039 593.845 77.8435 597.172 75.6248C600.127 73.6553 603.871 72.5713 607.715 72.5713C611.558 72.5713 615.302 73.6561 618.257 75.6248C621.584 77.8427 623.701 81.0031 624.379 84.7654C624.535 85.6276 624.324 86.4802 623.802 87.1046C623.565 87.389 623.267 87.6169 622.931 87.7717C622.594 87.9266 622.228 88.0045 621.857 87.9998Z" />

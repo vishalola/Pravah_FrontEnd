@@ -44,7 +44,7 @@ export default function CustomAutoComplete(props){
             // make a call to the backend here only.
             setAdding(true);
             let projectId = location.pathname.substring(1);
-            axios.post("http://localhost:5001/task/assign",{
+            axios.post(`${process.env.REACT_APP_BACKEND_URL}/task/assign`,{
                 projectID:projectId, 
                 nodeID:props.nodeID, 
                 taskID:props.taskID,

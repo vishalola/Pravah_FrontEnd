@@ -15,7 +15,7 @@ export default function SendInvite(props){
         e.preventDefault();
         setAdding(true);
         setError(false);
-        axios.post("http://localhost:5001/invite/send"+location.pathname,{
+        axios.post(`${process.env.REACT_APP_BACKEND_URL}/invite/send`+location.pathname,{
             "toInvite":userName.trim(),
             "role":role.trim()
         },{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{

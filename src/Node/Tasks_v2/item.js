@@ -10,7 +10,7 @@ export default function Item(props){
     const [name,setName] = useState('');
     let fetchDetails = ()=>{
         // before this check if jwt token even exist
-          axios.get("http://localhost:5001/fetchDetails",{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{
+          axios.get(`${process.env.REACT_APP_BACKEND_URL}/fetchDetails`,{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{
             setName(res.data.name);
             // console.log("no error name is " + res.data.name);
           }).catch(e=>{ 
@@ -34,7 +34,7 @@ export default function Item(props){
                             setCompleted(true);
                             props.setTasksDone(task=>++task);
 
-                            axios.post("http://localhost:5001/task/update",{
+                            axios.post(`${process.env.REACT_APP_BACKEND_URL}/task/update`,{
                                 "projectID":props.projectID, 
                                 "nodeID":props.nodeID,
                                 "taskID":props.taskID,
@@ -52,7 +52,7 @@ export default function Item(props){
                         {
                             setCompleted(false);
                             props.setTasksDone(task=>--task);
-                            axios.post("http://localhost:5001/task/update",{
+                            axios.post(`${process.env.REACT_APP_BACKEND_URL}/task/update`,{
                                 "projectID":props.projectID, 
                                 "nodeID":props.nodeID,
                                 "taskID":props.taskID,

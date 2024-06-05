@@ -21,7 +21,7 @@ export default function Tasks(props){
         let projectId = location.pathname.substring(1);
         setTaskList([])
         setDone(0);
-        axios.post("http://localhost:5001/task/fetchByID",{
+        axios.post( `${process.env.REACT_APP_BACKEND_URL}/task/fetchByID`,{
             projectID:projectId,
             nodeID:props.nodeID
         },{ headers: { Authorization:localStorage.getItem('jwtToken') } }).then(res=>{
@@ -46,7 +46,7 @@ export default function Tasks(props){
 
             // first send this to backend and then update
             let projectId = location.pathname.substring(1);
-            axios.post("http://localhost:5001/task/create",{
+            axios.post(`${process.env.REACT_APP_BACKEND_URL}/task/create`,{
                 title:task, 
                 projectID:projectId, 
                 nodeID:props.nodeID, 
