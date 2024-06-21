@@ -31,14 +31,6 @@ export default function Carousel(
 
             }
        }
-        // setItems(list=>{
-        //     let newList = list.map(contact=>{
-
-        //     })
-        // })
-        // contactItems?.forEach((element)=>{
-        //     console.log(element)
-        // })
     }
     useEffect(()=>{
         setItems([]);
@@ -52,7 +44,7 @@ export default function Carousel(
         }
     },[data])
     return (
-        <div className="relative outlin">
+        <div className="relative">
             <div className="absolute top-0 blurEffect w-full z-10 min-h-[50px] px-10">
                 {/* DIV FOR BLURR EFFECT TOP */}
             </div>
@@ -64,18 +56,6 @@ export default function Carousel(
                     {/* BUFFER DIV TOP */}
                 </div>
                 {contactItems}
-                {/* <div className="outlin text-gray-400 min-h-[50px] hover:font-semibold transition-all  px-10 flex justify-center items-center">
-                    Pavitra Pandey
-                </div>
-                <div className="outlin min-h-[50px] px-10 flex justify-center items-center">
-                    Sahil Yadav
-                </div>
-                <div className="outlin text-gray-400 min-h-[50px] px-10 flex justify-center items-center">
-                    Vishal Ola
-                </div>
-                <div className="outlin text-gray-400 min-h-[50px] px-10 flex justify-center items-center">
-                    Arsh Singh
-                </div> */}
                 <div className="outlin  min-h-[50px] px-10 flex justify-center items-center">
                     {/* BUFFER DIV BOTTOM */}
                 </div>

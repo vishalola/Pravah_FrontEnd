@@ -18,6 +18,7 @@ export default function Home(props){
                 <div id="contact" className="h-full bg-purple-200">
                     Contact
                 </div> */}
+
                 <Outlet/>
             </div>
             <div className="h-[20vh]">
